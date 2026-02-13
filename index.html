@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine, Mimi? 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 25%, #f67280 50%, #ff8fab 75%, #ffc2d1 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Music control */
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Floating hearts background */
+        .heart-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.3;
+            animation: floatUp 15s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Rose petals falling */
+        .petal {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.4;
+            animation: fallPetal 12s linear infinite;
+        }
+
+        @keyframes fallPetal {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.4;
+            }
+            90% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .content {
+            text-align: center;
+            max-width: 900px;
+            animation: gentleBounce 3s ease-in-out infinite;
+        }
+
+        @keyframes gentleBounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .main-emoji {
+            font-size: 6rem;
+            margin-bottom: 1rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        h1 {
+            font-size: 4rem;
+            color: white;
+            text-shadow: 4px 4px 8px rgba(0,0,0,0.3);
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            font-size: 2.5rem;
+            color: #fff;
+            font-style: italic;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            font-weight: 300;
+        }
+
+        /* Image gallery */
+        .image-gallery {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .romantic-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            animation: floatImage 3s ease-in-out infinite;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .romantic-image:nth-child(1) { animation-delay: 0s; }
+        .romantic-image:nth-child(2) { animation-delay: 0.5s; }
+        .romantic-image:nth-child(3) { animation-delay: 1s; }
+        .romantic-image:nth-child(4) { animation-delay: 1.5s; }
+
+        @keyframes floatImage {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-15px) rotate(5deg);
+            }
+        }
+
+        .poem-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 3rem;
+            margin: 2rem auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .poem-line {
+            font-size: 1.5rem;
+            color: white;
+            line-height: 2;
+            font-style: italic;
+            margin: 1rem 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .personal-touch {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .personal-touch p {
+            font-size: 1.3rem;
+            color: white;
+            line-height: 1.8;
+            margin: 0.8rem 0;
+        }
+
+        .buttons-container {
+            position: relative;
+            height: 150px;
+            margin: 3rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 1.5rem 3rem;
+            font-size: 1.8rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #fff 0%, #ffe5ec 100%);
+            color: #ff6b9d;
+            z-index: 20;
+            position: relative;
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.15) rotate(-5deg);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.5);
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, #6c5b7b 0%, #4a4458 100%);
+            color: white;
+            position: relative;
+            transition: all 0.3s ease-out;
+        }
+
+        .btn-no:hover {
+            transform: scale(1.1);
+        }
+
+        .sarcastic-text {
+            font-size: 1.3rem;
+            color: white;
+            font-style: italic;
+            margin-top: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeIn 0.5s ease-in;
+            min-height: 40px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .poetic-overlay {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            animation: fadeInOut 4s ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            10%, 90% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .poetic-overlay .poem-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            max-width: 500px;
+        }
+
+        .poetic-overlay .poem-line {
+            color: #ff6b9d;
+            font-size: 1.3rem;
+        }
+
+        .footer-text {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-style: italic;
+            margin-top: 3rem;
+        }
+
+        /* Success screen - SCROLLABLE */
+        .success-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 50%, #ffc2d1 100%);
+            z-index: 1000;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .success-screen.active {
+            display: block;
+            animation: scaleIn 0.8s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .celebration-heart, .celebration-kiss {
+            position: fixed;
+            font-size: 4rem;
+            animation: celebrateFloat 3s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes celebrateFloat {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .celebration-kiss {
+            animation: celebratePulse 2s ease-in-out forwards;
+        }
+
+        @keyframes celebratePulse {
+            0%, 100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 1;
+            }
+        }
+
+        .success-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 4rem 2rem;
+            min-height: 100vh;
+        }
+
+        .success-emoji {
+            font-size: 8rem;
+            animation: bounceIn 1s ease-out;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .success-title {
+            font-size: 5rem;
+            color: white;
+            margin: 2rem 0;
+            text-shadow: 4px 4px 8px rgba(0,0,0,0.3);
+            animation: slideUp 0.8s ease-out 0.2s backwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .success-message {
+            font-size: 2rem;
+            color: white;
+            font-style: italic;
+            margin: 1rem 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            animation: slideUp 0.8s ease-out 0.4s backwards;
+        }
+
+        .success-images {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+            animation: slideUp 0.8s ease-out 0.5s backwards;
+        }
+
+        .success-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            animation: rotate3d 6s ease-in-out infinite;
+        }
+
+        .success-image:nth-child(1) { animation-delay: 0s; }
+        .success-image:nth-child(2) { animation-delay: 2s; }
+        .success-image:nth-child(3) { animation-delay: 4s; }
+
+        @keyframes rotate3d {
+            0%, 100% {
+                transform: rotateY(0deg) scale(1);
+            }
+            50% {
+                transform: rotateY(360deg) scale(1.1);
+            }
+        }
+
+        .success-poem {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 3rem;
+            margin: 3rem auto;
+            max-width: 800px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.8s ease-out 0.6s backwards;
+        }
+
+        .success-poem p {
+            font-size: 1.5rem;
+            color: white;
+            line-height: 2;
+            margin: 1rem 0;
+            font-style: italic;
+        }
+
+        .love-letter {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 3rem;
+            margin: 3rem auto;
+            max-width: 700px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            animation: slideUp 0.8s ease-out 0.8s backwards;
+        }
+
+        .love-letter h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .love-letter p {
+            font-size: 1.4rem;
+            color: white;
+            line-height: 2;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            .subtitle {
+                font-size: 1.8rem;
+            }
+            .poem-line {
+                font-size: 1.2rem;
+            }
+            .btn {
+                padding: 1rem 2rem;
+                font-size: 1.5rem;
+            }
+            .success-title {
+                font-size: 3rem;
+            }
+            .romantic-image {
+                width: 120px;
+                height: 120px;
+                font-size: 3rem;
+            }
+            .success-image {
+                width: 150px;
+                height: 150px;
+                font-size: 4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Music control -->
+    <div class="music-control" id="musicControl" onclick="toggleMusic()">
+        🎵
+    </div>
+
+    <!-- Background music -->
+   <audio id="bgMusic" loop preload="auto">
+    <source src="tum.mp3" type="audio/mpeg">
+</audio>
+    <!-- Floating hearts container -->
+    <div class="heart-container" id="heartContainer"></div>
+
+    <!-- Main content -->
+    <div class="container" id="mainContainer">
+        <div class="content">
+            <div class="main-emoji">💝</div>
+            <h1>Hey Mimi...</h1>
+            <div class="subtitle">Will you be my Valentine?</div>
+
+            <!-- Romantic images -->
+            <div class="image-gallery">
+                <div class="romantic-image">🌹</div>
+                <div class="romantic-image">💑</div>
+                <div class="romantic-image">💕</div>
+                <div class="romantic-image">✨</div>
+            </div>
+
+            <div class="poem-box">
+                <p class="poem-line">
+                    "Like the moon needs the stars to shine complete,<br>
+                    My heart needs you to make each moment sweet."
+                </p>
+                <p class="poem-line">
+                    In a universe of billions, you're the one I see,<br>
+                    My Iqra, my Mimi, my entire galaxy. ✨
+                </p>
+                <p class="poem-line">
+                    Every algorithm fails to calculate this truth:<br>
+                    That you're the most perfect equation of beauty and youth.
+                </p>
+            </div>
+
+            <!-- Personal touches -->
+            <div class="personal-touch">
+                <p>💭 Every time I see your smile, the world feels right...</p>
+                <p>🌙 In every dream, every thought, you're the constant light.</p>
+                <p>🎶 Your laughter is my favorite melody,</p>
+                <p>💫 Your presence is my sweetest remedy.</p>
+            </div>
+
+            <div class="buttons-container">
+                <button class="btn btn-yes" onclick="handleYes()">
+                    Yes! 💖
+                </button>
+                <button class="btn btn-no" id="noBtn" onmouseenter="moveNoButton()">
+                    No 😔
+                </button>
+            </div>
+
+            <div class="sarcastic-text" id="sarcasticText"></div>
+
+            <div class="footer-text">
+                <p>"In a world full of temporary connections,<br>
+                I'm asking for your permanent affection" 🌹</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Poetic overlay -->
+    <div id="poeticOverlay"></div>
+
+    <!-- Success screen - NOW SCROLLABLE -->
+    <div class="success-screen" id="successScreen">
+        <div class="music-control" onclick="toggleMusic()">🎵</div>
+        <div id="celebrationContainer"></div>
+        <div class="success-content">
+            <div class="success-emoji">💕</div>
+            <h1 class="success-title">She Said YES!</h1>
+            <div class="success-message">
+                Mimi, you've just made this the most magical moment of my life! 🌹
+            </div>
+
+            <!-- Success images -->
+            <div class="success-images">
+                <div class="success-image">💑</div>
+                <div class="success-image">💖</div>
+                <div class="success-image">🌹</div>
+            </div>
+
+            <div class="success-poem">
+                <p>"In the garden of my heart, you are the only rose that blooms eternal,</p>
+                <p>Every petal whispers your name in verses universal."</p>
+                <p>━━━━━━━━━━━━━━━━━━</p>
+                <p>"Through pixels and screens, across dreams and time,</p>
+                <p>My heart beats only for you, in perfect rhythm and rhyme."</p>
+                <p>━━━━━━━━━━━━━━━━━━</p>
+                <p>"You are my sunrise after the darkest night,</p>
+                <p>My compass when I've lost my sight.</p>
+                <p>In code and in life, in every single line,</p>
+                <p>You're the answer I've been searching for—forever mine."</p>
+            </div>
+
+            <!-- Personal love letter -->
+            <div class="love-letter">
+                <h2>To My Dearest Mimi 💌</h2>
+                <p>They say that finding your soulmate is like finding a needle in a haystack. But with you, it felt like the universe itself conspired to bring us together.</p>
+                
+                <p>Every conversation with you feels like coming home. Your voice is the melody I never knew I needed, and your smile... oh, your smile could light up the darkest corners of my world.</p>
+                
+                <p>I love how you make the ordinary feel extraordinary. Coffee tastes better when I'm thinking of you. Sunsets are more beautiful knowing you're under the same sky. Even rainy days feel like blessings because they give me an excuse to think of holding you close.</p>
+                
+                <p>You're not just my Valentine, Iqra. You're my best friend, my confidante, my favorite person in this entire universe. You're the one I want to share every sunrise with, every midnight conversation, every silly joke, and every important moment.</p>
+                
+                <p>Thank you for being you. Thank you for saying yes. Thank you for making me believe in magic again.</p>
+                
+                <p style="text-align: center; font-size: 1.8rem; margin-top: 2rem;">Forever and always yours,<br>Your Forever Valentine 💖</p>
+            </div>
+
+            <div class="success-poem">
+                <p>"Some love stories are written in the stars above,</p>
+                <p>But ours, dear Iqra, is written in the language of true love. 💫"</p>
+                <p>━━━━━━━━━━━━━━━━━━</p>
+                <p>"In this moment, and in every moment to come,</p>
+                <p>You are my everything, my only one."</p>
+                <p>━━━━━━━━━━━━━━━━━━</p>
+                <p style="font-size: 1.8rem; margin-top: 2rem;">Happy Valentine's Day, My Love! 💕</p>
+            </div>
+
+            <div class="footer-text" style="margin: 3rem 0 5rem 0;">
+                "And they lived happily ever after... in beautiful, poetic code" ✨
+                <p style="margin-top: 1rem;">💑 Gugu & Mimi Forever 💑</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let noHoverCount = 0;
+        let musicPlaying = false;
+        const music = document.getElementById('bgMusic');
+
+        const sarcasticMessages = [
+            "Oh, playing hard to get? Classic Mimi move! 😏",
+            "The 'No' button is getting dizzy from all this running...",
+            "I see what you're doing... making me work for it, huh? 💫",
+            "This button has traveled more than most people's vacation plans!",
+            "Are you enjoying this? Because the button definitely isn't 😅",
+            "At this point, the 'No' button should charge rent for all this movement!",
+            "Your mouse skills are impressive, but your answer choice needs work 👀",
+            "The button is tired. The button wants rest. The button begs for 'Yes' 🎭",
+            "Fun fact: Every time you hover, my heart skips a beat ❤️",
+            "Okay, I'm starting to think you're just showing off your cursor control...",
+            "Plot twist: The 'No' button doesn't even want to be clicked anymore!",
+            "If persistence was a sport, I'd be winning gold right now 🏆",
+            "This is exhausting. Like... emotionally AND physically 😮‍💨",
+            "Even Romeo didn't chase Juliet's approval button this much!",
+            "Your cursor is like a cat playing with yarn... but I'm the yarn 🧶",
+            "The 'No' button is filing a restraining order against your mouse!",
+            "I've written 1000 lines of code, but this is the hardest bug to fix 💔",
+            "Still waiting for that 'Yes'... I've got all day... and night... and forever ⏰",
+            "Mimi, my love, even the stars are rooting for 'Yes' at this point! 🌟",
+            "This button has seen more action than an action movie! 🎬"
+        ];
+
+        const poeticLines = [
+            "In pixels and code, my heart compiles only for you, Mimi",
+            "Every hover, every click, brings us closer to our digital destiny",
+            "Like stars in the night sky, you illuminate my entire universe",
+            "Between the 'Yes' and 'No', my whole world awaits your choice",
+            "Your smile is the syntax that makes my heart's code run perfectly",
+            "In the algorithm of love, you're the only variable that matters",
+            "My dear Iqra, you're the poetry my heart has been writing all along",
+            "Even the moon envies how you light up my darkest nights",
+            "You're not just my Valentine—you're my forever favorite person",
+            "In a database of millions, you're the only record I want to commit to",
+            "Like a perfectly debugged code, you make everything just work",
+            "Every moment without 'Yes' feels like an infinite loop of longing",
+            "You're the missing semicolon that completes my life's code",
+            "In the repository of my heart, you're the main branch forever"
+        ];
+
+        // Toggle music
+        function toggleMusic() {
+            if (musicPlaying) {
+                music.pause();
+                musicPlaying = false;
+                document.querySelectorAll('.music-control').forEach(el => el.textContent = '🔇');
+            } else {
+                music.play().catch(e => console.log('Music play prevented'));
+                musicPlaying = true;
+                document.querySelectorAll('.music-control').forEach(el => el.textContent = '🎵');
+            }
+        }
+
+        // Create floating hearts
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.innerHTML = ['❤️', '💕', '💖', '💗', '💝', '💞'][Math.floor(Math.random() * 6)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.animationDuration = (12 + Math.random() * 8) + 's';
+            document.getElementById('heartContainer').appendChild(heart);
+
+            setTimeout(() => heart.remove(), 20000);
+        }
+
+        // Create rose petals
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.innerHTML = '🌹';
+            petal.style.left = Math.random() * 100 + '%';
+            petal.style.animationDelay = Math.random() * 3 + 's';
+            petal.style.animationDuration = (10 + Math.random() * 5) + 's';
+            document.getElementById('heartContainer').appendChild(petal);
+
+            setTimeout(() => petal.remove(), 15000);
+        }
+
+        // Generate initial hearts and petals
+        for (let i = 0; i < 15; i++) {
+            createFloatingHeart();
+            if (i < 8) createPetal();
+        }
+
+        // Continue creating hearts and petals
+        setInterval(createFloatingHeart, 1000);
+        setInterval(createPetal, 2000);
+
+        // Move No button
+        function moveNoButton() {
+            // Try to play music on first interaction
+            if (!musicPlaying) {
+                music.volume = 0.4;
+                music.play().then(() => {
+                    musicPlaying = true;
+                    document.querySelectorAll('.music-control').forEach(el => el.textContent = '🎵');
+                }).catch(e => console.log('Music autoplay prevented'));
+            }
+
+            noHoverCount++;
+            const btn = document.getElementById('noBtn');
+            const container = document.querySelector('.buttons-container');
+            const containerRect = container.getBoundingClientRect();
+            
+            const maxX = containerRect.width - btn.offsetWidth - 100;
+            const maxY = containerRect.height - btn.offsetHeight;
+            
+            const randomX = (Math.random() - 0.5) * maxX;
+            const randomY = (Math.random() - 0.5) * maxY;
+            
+            btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+
+            // Show sarcastic message
+            if (noHoverCount >= 1) {
+                const sarcasticText = document.getElementById('sarcasticText');
+                const messageIndex = Math.min(noHoverCount - 1, sarcasticMessages.length - 1);
+                sarcasticText.textContent = sarcasticMessages[messageIndex];
+            }
+
+            // Show poetic overlay occasionally
+            if (Math.random() > 0.5) {
+                showPoeticOverlay();
+            }
+        }
+
+        // Show poetic overlay
+        function showPoeticOverlay() {
+            const overlay = document.getElementById('poeticOverlay');
+            const randomPoem = poeticLines[Math.floor(Math.random() * poeticLines.length)];
+            
+            overlay.innerHTML = `
+                <div class="poetic-overlay">
+                    <div class="poem-box">
+                        <p class="poem-line">${randomPoem}</p>
+                    </div>
+                </div>
+            `;
+
+            setTimeout(() => {
+                overlay.innerHTML = '';
+            }, 4000);
+        }
+
+        // Handle Yes click
+        function handleYes() {
+            // Play music
+            if (!musicPlaying) {
+                music.volume = 0.5;
+                music.play().then(() => {
+                    musicPlaying = true;
+                    document.querySelectorAll('.music-control').forEach(el => el.textContent = '🎵');
+                }).catch(e => console.log('Music play prevented'));
+            }
+
+            // Show success screen
+            const successScreen = document.getElementById('successScreen');
+            successScreen.classList.add('active');
+
+            // Scroll to top of success screen
+            successScreen.scrollTop = 0;
+
+            // Create celebration hearts and kisses
+            const container = document.getElementById('celebrationContainer');
+            
+            // Hearts
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'celebration-heart';
+                    heart.innerHTML = ['❤️', '💕', '💖', '💗', '💝', '💞'][Math.floor(Math.random() * 6)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDelay = Math.random() * 2 + 's';
+                    heart.style.animationDuration = (2 + Math.random() * 3) + 's';
+                    container.appendChild(heart);
+
+                    setTimeout(() => heart.remove(), 5000);
+                }, i * 100);
+            }
+
+            // Kisses
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const kiss = document.createElement('div');
+                    kiss.className = 'celebration-kiss';
+                    kiss.innerHTML = '💋';
+                    kiss.style.left = (20 + Math.random() * 60) + '%';
+                    kiss.style.top = (20 + Math.random() * 60) + '%';
+                    kiss.style.animationDelay = Math.random() * 1.5 + 's';
+                    container.appendChild(kiss);
+
+                    setTimeout(() => kiss.remove(), 3000);
+                }, i * 150);
+            }
+        }
+
+        // Try to play music on any user interaction
+        document.addEventListener('click', function initMusic() {
+            if (!musicPlaying) {
+                music.volume = 0.4;
+                music.play().then(() => {
+                    musicPlaying = true;
+                    document.querySelectorAll('.music-control').forEach(el => el.textContent = '🎵');
+                }).catch(e => console.log('Music autoplay prevented'));
+            }
+        }, { once: false });
+    </script>
+</body>
+</html>
